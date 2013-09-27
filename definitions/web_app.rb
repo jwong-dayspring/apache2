@@ -26,6 +26,9 @@ define :web_app, :template => "web_app.conf.erb", :enable => true do
   include_recipe "apache2::mod_deflate"
   include_recipe "apache2::mod_headers"
 
+  params[:rewrite_config] = "#{node[:apache][:dir]}/sites-available/#{application_name}.conf.d/rewrite"
+  params[:local_config] = "#{node[:apache][:dir]}/sites-available/#{application_name}.conf.d/local"
+
   template "#{node['apache']['dir']}/sites-available/#{application_name}.conf" do
     source params[:template]
     owner "root"
